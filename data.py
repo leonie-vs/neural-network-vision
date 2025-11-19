@@ -23,20 +23,17 @@ def generate_image_dataset(samples_per_class=10):
 
     for i in range(samples_per_class):
         result = generate_blank()
-        result.flatten()
-        data.append(result)
+        data.append(result.flatten())
         labels.append(0)
 
     for i in range(samples_per_class):
         result = generate_horizontal_line()
-        result.flatten()
-        data.append(result)
+        data.append(result.flatten())
         labels.append(1)
     
     for i in range(samples_per_class):
         result = generate_vertical_line()
-        result.flatten()
-        data.append(result)
+        data.append(result.flatten())
         labels.append(2)
 
     X = np.array(data)
