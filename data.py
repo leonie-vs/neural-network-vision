@@ -16,9 +16,7 @@ def generate_vertical_line():
         line[random_index] = 1
     return blank_array
 
-print(generate_vertical_line())
-
-def generate_image_dataset(samples_per_class=100):
+def generate_image_dataset(samples_per_class=10):
 
     data = []
     labels = []
@@ -34,6 +32,12 @@ def generate_image_dataset(samples_per_class=100):
         result.flatten()
         data.append(result)
         labels.append(1)
+    
+    for i in range(samples_per_class):
+        result = generate_vertical_line()
+        result.flatten()
+        data.append(result)
+        labels.append(2)
 
     X = np.array(data)
     y = np.array(labels)
@@ -41,4 +45,4 @@ def generate_image_dataset(samples_per_class=100):
     return X, y
 
 X, y = generate_image_dataset()
-#print(X, y)
+print(X, y)
