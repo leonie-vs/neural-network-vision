@@ -50,4 +50,36 @@ model.summary()
 model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test))
 
 # evaluate the trained model
-model.evaluate(X_test, y_test)
+loss, accuracy = model.evaluate(X_test, y_test)
+print("Test accuracy:", accuracy)
+
+# helper function to print an 8×8 image in the console
+def print_image(flat_array):
+    img = flat_array.reshape(8, 8)
+    for row in img:
+        line = ''.join('#' if pixel == 1 else ' ' for pixel in row)
+        print(line)
+
+# mapping class numbers to labels
+label_names = {
+    0: "blank",
+    1: "horizontal line",
+    2: "vertical line"
+}
+
+# check five random predictions
+pred_probs = model.predict(X_test)
+pred_classes = np.argmax(pred_probs, axis=1)
+
+indices = np.random.choice(len(X_test), 5, replace=False)
+
+# print images to the console along with what the model thinks they are and what they really are
+for i in indices:
+    print("\nIMAGE:")
+    print_image(X_test[i])
+
+    true_label = y_test[i]
+    pred_label = pred_classes[i]
+
+    print("True label:     ", label_names[true_label])
+    print("Predicted label:", label_names[pred_label])
