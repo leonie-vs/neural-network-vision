@@ -1,3 +1,6 @@
+import random
+import os
+import numpy as np
 import tensorflow as tf
 import keras
 from keras import layers
@@ -8,9 +11,14 @@ from tensorflow.keras.layers import Input
 from data import generate_image_dataset
 from sklearn.model_selection import train_test_split
 
-X, y = generate_image_dataset()
-
 RANDOM_SEED = 42
+os.environ["PYTHONHASHSEED"] = f"{RANDOM_SEED}"
+os.environ["TF_DETERMINISTIC_OPS"] = "1"
+random.seed(RANDOM_SEED)
+np.random.seed(RANDOM_SEED)
+tf.random.set_seed(RANDOM_SEED)
+
+X, y = generate_image_dataset()
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_SEED)
 
@@ -40,3 +48,6 @@ model.summary()
 
 # train the model
 model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test))
+
+# evaluate the trained model
+model.evaluate(X_test, y_test)
