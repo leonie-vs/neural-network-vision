@@ -9,4 +9,36 @@ def generate_horizontal_line():
     blank_array[random_index] = 1
     return blank_array
 
-print(generate_horizontal_line())
+def generate_vertical_line():
+    random_index = np.random.randint(0,8)
+    blank_array = generate_blank()
+    for line in blank_array:
+        line[random_index] = 1
+    return blank_array
+
+print(generate_vertical_line())
+
+def generate_image_dataset(samples_per_class=100):
+
+    data = []
+    labels = []
+
+    for i in range(samples_per_class):
+        result = generate_blank()
+        result.flatten()
+        data.append(result)
+        labels.append(0)
+
+    for i in range(samples_per_class):
+        result = generate_horizontal_line()
+        result.flatten()
+        data.append(result)
+        labels.append(1)
+
+    X = np.array(data)
+    y = np.array(labels)
+
+    return X, y
+
+X, y = generate_image_dataset()
+#print(X, y)
